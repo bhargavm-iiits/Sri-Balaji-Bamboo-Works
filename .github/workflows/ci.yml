@@ -19,4 +19,5 @@ jobs:
       - run: npm run build
       - run: npm run check
       - run: npm test
+      - run: node --test hosting/sites/tests/backend.test.mjs
       - run: npm audit --omit=dev --audit-level=high

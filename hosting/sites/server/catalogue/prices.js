@@ -1,0 +1,28 @@
+// Prices supplied by the owner on 15 October 2026. null units need confirmation.
+// Ranges are kept as ranges; they are not silently turned into fixed prices.
+export const pricing = {
+  'biryani-basket': {min:420,max:420,unit:null},
+  'dyaawara-basket': {min:650,max:650,unit:null},
+  'marriage-basket': {min:400,max:400,unit:null},
+  'small-basket': {min:150,max:200,unit:null},
+  'bamboo-galuvu': {min:350,max:350,unit:'piece'},
+  'bamboo-poles': {min:800,max:800,unit:'pair'},
+  'hammer-sticks': {min:150,max:150,unit:null},
+  'jatree-dabbe': {min:10,max:15,unit:'piece'},
+  'bamboo-ladder': {min:85,max:90,unit:'foot'},
+  'kuduru': {min:600,max:600,unit:null},
+  'butta-makkari': {min:150,max:150,unit:null},
+  'kasa-makkari': {min:300,max:300,unit:null},
+  'shett-makkari': {min:300,max:350,unit:null},
+  'mara-home': {min:250,max:250,unit:null},
+  'mara-large': {min:300,max:300,unit:null},
+  'mara-medium': {min:200,max:200,unit:null},
+  'mara-small': {min:150,max:150,unit:null},
+  'bamboo-panjara': {min:400,max:450,unit:null},
+  'echalu-panjara': {min:400,max:400,unit:null},
+  'shibbilu-pair': {min:400,max:400,unit:'pair'},
+  'shibbilu-large': {min:250,max:250,unit:'piece'},
+  'coconut-thatte': {min:500,max:500,unit:null},
+  'thottilu': {min:800,max:800,unit:null},
+  'bechanage': {min:50,max:50,unit:'piece'},
+};
