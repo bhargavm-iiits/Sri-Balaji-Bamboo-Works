@@ -1,16 +1,18 @@
 # Current public deployment
 
-The requested free deployment is live on Sites at https://sri-balaji-bamboo-works.superolm64.chatgpt.site. Its maintained hosted source is in `hosting/sites/`, with a local working checkout at `../sites-deployment`. The Node/Render version remains available below as an alternative; no paid Render service or VPS was provisioned.
+The public storefront is live at **https://www.balajibambooworks.com/**, with **https://balajibambooworks.com/** also serving the store. The owner registered the domain with GoDaddy; its DNS and both HTTPS certificates are active. Sites provides the hosting using the existing account. The original platform address remains available. Maintained hosted source is in `hosting/sites/`, with a local working checkout at `../sites-deployment`. The Node/Render version below is an alternative, not the active deployment; no paid Render service or VPS was provisioned.
 
 Hosted orders use D1 with authenticated AES-256-GCM encrypted documents. The private `/owner` portal uses the configured owner ChatGPT identity plus an authenticator code. The private authenticator setup file is stored only on this machine at `../sites-deployment/.private/Owner-Authenticator-Setup.txt`; never upload it. Runtime secrets are configured in Sites. Existing local orders remain in the local Node store and were not uploaded.
 
-Platform quotas apply. A custom `balajibambooworks.com` domain still requires registration/ownership. Google submission status and release evidence are recorded in `../sites-deployment/qa/`.
+Platform quotas apply. Google Search Console ownership for `https://www.balajibambooworks.com/` is verified, and its 40-URL sitemap has been submitted. Public pages allow indexing and emit canonical URLs and structured data for their actual HTTPS origin. Private orders, owner routes, checkout and payment stay excluded from indexing. Google controls crawling, indexing and ranking; submission is not proof of search inclusion. Current submission status and release evidence are recorded in `../sites-deployment/qa/`.
+
+The hosted source remains production version 2, commit `742e03c5a0b56d0d55ea0890741dc7f05d589526`. Runtime environment revision 3 updates only the public `GOOGLE_SITE_VERIFICATION` value for the .com Search Console property. It was published successfully as deployment `appgdep_6ad163ebec748191831aaf85d90fdc9f`; order encryption, owner MFA and stored orders were preserved. This replaces the earlier verification tag for the temporary platform address.
 
 ---
 
 # Render deployment
 
-Requested address: **https://www.balajibambooworks.com**. Registration and ownership of this domain, hosting, and verification are separate from preparing this repository. No domain purchase or paid cloud resource has been created.
+The instructions below apply only if migrating to Render in the future. The requested .com address is already registered by the owner and connected to Sites; do not apply Render DNS targets to the active deployment. No paid Render resource has been created.
 
 ## Fresh production secrets
 
