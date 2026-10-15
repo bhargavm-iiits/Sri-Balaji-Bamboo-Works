@@ -7,7 +7,7 @@
     "start": "node --env-file-if-exists=.env server.mjs",
     "test": "node --test tests/*.test.mjs",
     "build": "node build-offline.mjs && node scripts/prerender.mjs",
-    "check": "node --check dist/app.js && node --check dist/store.js && node --check dist/catalogue.js && node --check dist/prices.js && node --check dist/motion.js && node --check dist/landing.js && node --check dist/order-flow.js && node --check server.mjs && node --check backend/orders.mjs && node --check backend/notifications.mjs && node --check backend/security.mjs && node --check scripts/prerender.mjs && node --check scripts/security-setup.mjs",
+    "check": "node --check dist/app.js && node --check dist/store.js && node --check dist/catalogue.js && node --check dist/prices.js && node --check dist/motion.js && node --check dist/landing.js && node --check dist/order-flow.js && node --check server.mjs && node --check backend/orders.mjs && node --check backend/notifications.mjs && node --check backend/security.mjs && node --check scripts/prerender.mjs && node --check scripts/security-setup.mjs && node --check backend/owner-page.mjs && node --check backend/owner-app.js && node --check backend/owner-login.js",
     "security:setup": "node scripts/security-setup.mjs"
   },
   "engines": {

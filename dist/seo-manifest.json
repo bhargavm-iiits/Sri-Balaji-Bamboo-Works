@@ -283,44 +283,38 @@
       "title": "Bechanage · Hand Fan | Sri Balaji Bamboo Works, Shidlaghatta",
       "description": "A rectangular woven hand fan with a long handle and green-and-magenta accents. The natural strips form a lively geometric pattern; confirm the available colours and design. Contact our Shidlaghatta workshop to confirm specifications and delivery."
     },
-    "/owner": {
-      "file": ".pages/40.html",
-      "indexable": false,
-      "title": "Owner sign in | Sri Balaji Bamboo Works",
-      "description": "Bamboo shop in Shidlaghatta, Chikkaballapur, Karnataka. Shop baskets, Mara trays, hand fans, bamboo poles and ladders at Sri Balaji Bamboo Works."
-    },
     "/orders": {
-      "file": ".pages/41.html",
+      "file": ".pages/40.html",
       "indexable": false,
       "title": "My orders | Sri Balaji Bamboo Works",
       "description": "Bamboo shop in Shidlaghatta, Chikkaballapur, Karnataka. Shop baskets, Mara trays, hand fans, bamboo poles and ladders at Sri Balaji Bamboo Works."
     },
     "/cart": {
-      "file": ".pages/42.html",
+      "file": ".pages/41.html",
       "indexable": false,
       "title": "Sri Balaji Bamboo Works",
       "description": "Bamboo shop in Shidlaghatta, Chikkaballapur, Karnataka. Shop baskets, Mara trays, hand fans, bamboo poles and ladders at Sri Balaji Bamboo Works."
     },
     "/checkout": {
-      "file": ".pages/43.html",
+      "file": ".pages/42.html",
       "indexable": false,
       "title": "Sri Balaji Bamboo Works",
       "description": "Bamboo shop in Shidlaghatta, Chikkaballapur, Karnataka. Shop baskets, Mara trays, hand fans, bamboo poles and ladders at Sri Balaji Bamboo Works."
     },
     "/payment": {
-      "file": ".pages/44.html",
+      "file": ".pages/43.html",
       "indexable": false,
       "title": "Approved-order UPI payment | Sri Balaji Bamboo Works",
       "description": "Bamboo shop in Shidlaghatta, Chikkaballapur, Karnataka. Shop baskets, Mara trays, hand fans, bamboo poles and ladders at Sri Balaji Bamboo Works."
     },
     "/request": {
-      "file": ".pages/45.html",
+      "file": ".pages/44.html",
       "indexable": false,
       "title": "Sri Balaji Bamboo Works",
       "description": "Bamboo shop in Shidlaghatta, Chikkaballapur, Karnataka. Shop baskets, Mara trays, hand fans, bamboo poles and ladders at Sri Balaji Bamboo Works."
     },
     "/404": {
-      "file": ".pages/46.html",
+      "file": ".pages/45.html",
       "indexable": false,
       "title": "Sri Balaji Bamboo Works",
       "description": "Bamboo shop in Shidlaghatta, Chikkaballapur, Karnataka. Shop baskets, Mara trays, hand fans, bamboo poles and ladders at Sri Balaji Bamboo Works."

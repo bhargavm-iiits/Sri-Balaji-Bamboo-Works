@@ -7,6 +7,7 @@ import {OrderStore,OrderError,hash,publicOrder,ownerOrder,ownerCredentials,verif
 import {ownerNotifier} from './backend/notifications.mjs';
 import {business} from './dist/config.js';
 import {securityHeaders,validateTotpSecret,checkTotp} from './backend/security.mjs';
+import {ownerPage} from './backend/owner-page.mjs';
 const here=path.dirname(fileURLToPath(import.meta.url));
 const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.webp':'image/webp','.xml':'application/xml; charset=utf-8','.txt':'text/plain; charset=utf-8','.json':'application/json; charset=utf-8'};
 const json=(res,status,data,extra={})=>{res.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff',...extra});res.end(JSON.stringify(data));};
@@ -39,6 +40,9 @@ export async function createStorefrontServer(options={}){
     limit('api:'+req.socket.remoteAddress,400,60000);
     if(req.method==='POST'&&(![new URL(origin).origin,...(production&&process.env.RENDER_EXTERNAL_HOSTNAME===host?['https://'+host]:[])].includes(req.headers.origin)||req.headers['sec-fetch-site']==='cross-site'))error('Open the store directly before submitting.',403);
     if(route==='/api/health'&&req.method==='GET')return json(res,200,{ok:true,orderWorkflow:true,whatsappConfigured:notifier.configured});
+    if(route==='/api/owner/app.js'&&['GET','HEAD'].includes(req.method)){
+     auth(req);res.writeHead(200,{'Content-Type':'text/javascript; charset=utf-8','Cache-Control':'private, no-store','Vary':'Cookie'});return res.end(req.method==='HEAD'?undefined:await readFile(path.join(here,'backend/owner-app.js'),'utf8'));
+    }
     if(route==='/api/owner/session'&&req.method==='GET'){try{auth(req);return json(res,200,{authenticated:true,ownerPhone:'9591457484',whatsappConfigured:notifier.configured,mfaRequired:!!mfaSecret});}catch{return json(res,200,{authenticated:false,mfaRequired:!!mfaSecret});}}
     if(route==='/api/owner/login'&&req.method==='POST'){
      limit('login:'+req.socket.remoteAddress,8,15*60000);if(loginBusy)error('An owner sign-in is being checked. Try again shortly.',429);const input=await body(req);loginBusy=true;try{const valid=await verifyPassword(input.password,credentials);const otp=mfaSecret?checkTotp(mfaSecret,input.otp,lastOtpStep):null;if(!valid||(mfaSecret&&otp===null))error('Owner sign-in details are incorrect.',401);if(mfaSecret)lastOtpStep=otp;}finally{loginBusy=false;}
@@ -62,6 +66,13 @@ export async function createStorefrontServer(options={}){
     return json(res,404,{error:'API route not found.'});
    }
    if(!['GET','HEAD'].includes(req.method))error('Method not allowed.',405);
+   if(route==='/owner'||route==='/owner/'){
+    let authenticated=false;try{auth(req);authenticated=true;}catch{}
+    res.writeHead(200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'private, no-store','Vary':'Cookie','X-Robots-Tag':'noindex, nofollow'});return res.end(req.method==='HEAD'?undefined:ownerPage({authenticated,mfaRequired:!!mfaSecret}));
+   }
+   if(route==='/owner-login.js'){
+    res.writeHead(200,{'Content-Type':'text/javascript; charset=utf-8','Cache-Control':'no-store'});return res.end(req.method==='HEAD'?undefined:await readFile(path.join(here,'backend/owner-login.js'),'utf8'));
+   }
    if(route==='/robots.txt'&&!indexingEnabled){res.writeHead(200,{'Content-Type':'text/plain; charset=utf-8','Cache-Control':'no-cache'});return res.end(req.method==='HEAD'?undefined:'User-agent: *\nDisallow: /\n');}
    if(['/index.html','/shell.html','/offline.html'].includes(route)){res.writeHead(308,{Location:'/'});return res.end();}
    if(seo.pages[route]){
@@ -78,5 +89,5 @@ export async function createStorefrontServer(options={}){
 }
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){
  const server=await createStorefrontServer();process.on('SIGTERM',()=>server.close(()=>process.exit(0)));
- server.listen(Number(process.env.PORT)||4173,process.env.HOST||'127.0.0.1',()=>console.log('Local: http://localhost:'+server.address().port+' | Owner: /#/owner | Local owner access: .private/owner-access.txt'));
+ server.listen(Number(process.env.PORT)||4173,process.env.HOST||'127.0.0.1',()=>console.log('Local: http://localhost:'+server.address().port+' | Owner: /owner | Local owner access: .private/owner-access.txt'));
 }

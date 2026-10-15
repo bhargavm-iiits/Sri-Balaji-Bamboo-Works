@@ -17,3 +17,5 @@ Storage supports one Node process and one persistent disk. Sessions, replay trac
 Report vulnerabilities privately to balajibambooworks@gmail.com. Do not publish secrets or customer data in GitHub issues, and obtain authorization before testing live payments or causing external messages.
 
 References: [OWASP cryptographic storage](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html), [password storage](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html), [RFC 6238](https://datatracker.ietf.org/doc/html/rfc6238).
+
+Owner management is served separately from the customer bundle. `/owner` serves only a login page to guests, and `/api/owner/app.js` requires an authenticated owner cookie. Dashboard HTML and code are private/no-store. Customer tracking credentials never authorize owner mutation APIs. The customer storefront does not link the owner portal. The login URL remains reachable to someone who knows it; authorization is enforced by the backend, not by hiding a URL.

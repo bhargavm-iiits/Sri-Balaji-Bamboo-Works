@@ -50,3 +50,9 @@ Back up encrypted order storage and the matching AES key separately. Test recove
 Record the last working commit. Roll back application code through Render while retaining the same persistent disk and encryption key. Do not restore older order data over newer customer requests or recreate the disk/key as a troubleshooting shortcut.
 
 Official references: [Render Blueprint specification](https://render.com/docs/blueprint-spec), [disks](https://render.com/docs/disks), [custom domains](https://render.com/docs/custom-domains), [DNS](https://render.com/docs/configure-other-dns), [Google JavaScript SEO](https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics), [local ranking](https://support.google.com/business/answer/7091), [ranking guarantees](https://developers.google.com/search/docs/fundamentals/do-i-need-seo).
+
+## Private owner management
+
+Bookmark `/owner` on the running website. Customer navigation and offline bundles have no owner sign-in link, approval forms or owner API handlers. The backend serves the separate login page and only serves `/api/owner/app.js` after owner authentication. Owner approvals, declines and receipt verification require the owner session plus the normal same-origin checks. Customers only receive their own status and approved payment amount through their private tracking key. No URL secrecy is relied on for authorization.
+
+After updating this release in Render, deploy the latest tested commit manually and check owner sign-in, one synthetic approval and the customer view. Preserve the existing storage disk and encryption key.
