@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /owner
+Disallow: /orders
+Disallow: /cart
+Disallow: /checkout
+Disallow: /payment
+Disallow: /request
+Sitemap: https://www.balajibambooworks.com/sitemap.xml

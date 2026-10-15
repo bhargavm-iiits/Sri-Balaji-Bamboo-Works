@@ -1,0 +1,13 @@
+import {readFile,writeFile} from 'node:fs/promises';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+import vm from 'node:vm';
+const root=path.dirname(fileURLToPath(import.meta.url));
+const read=name=>readFile(path.join(root,'dist',name),'utf8');
+const modules=['config.js','catalogue.js','prices.js','store.js','landing.js','motion.js','order-flow.js','app.js'];
+const [shell,...sources]=await Promise.all(['shell.html',...modules].map(read));
+const script=sources.map(source=>source.replace(/^import .*;\r?\n/gm,'').replace(/^export \{[^}]*\};?\r?\n/gm,'').replace(/\bexport (?=(?:async function|const|let|function|class)\b)/g,'')).join('\n');
+new vm.Script('(()=>{\n'+script+'\n})();',{filename:'offline-storefront.js'});
+const html=shell.replace('  <script type="module" src="app.js"></script>','').replace('</body>',`  <script>\n(()=>{\n${script.replaceAll('</script','<\\/script')}\n})();\n</script>\n</body>`);
+await Promise.all(['index.html','offline.html'].map(file=>writeFile(path.join(root,'dist',file),html)));
+console.log('Built index.html and offline.html with inline scripts for direct local opening.');
