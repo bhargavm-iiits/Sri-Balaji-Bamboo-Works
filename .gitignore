@@ -1,0 +1,15 @@
+node_modules/
+.sites-runtime/
+*.tar.gz
+qa/
+.private/
+.env
+.env.*
+!.env.example
+local-server*.log
+local-server.pid
+.openai/
+*-prompts.*
+photo-sources.json
+folder-asset-sources.json
+image-quality-check.json

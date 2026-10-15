@@ -1,0 +1,15 @@
+.git
+.private
+.env
+.env.*
+!.env.example
+.openai
+qa
+node_modules
+*.zip
+*.tar.gz
+local-server*
+*-prompts.*
+photo-sources.json
+folder-asset-sources.json
+image-quality-check.json
