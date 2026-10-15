@@ -1,0 +1,36 @@
+/* Photo depth: real photographs on a dimensional card, without synthetic product views. */
+.depth-card,.product-stage{--tilt-x:0deg;--tilt-y:0deg;--light-x:50%;--light-y:25%;position:relative;transform-style:preserve-3d;transition:transform .3s ease,box-shadow .3s ease;will-change:auto}
+.depth-card{border:1px solid #203d3212;box-shadow:0 2px 0 #d2cbbd,0 7px 15px #203d320e;transform:perspective(1100px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));isolation:isolate}
+.depth-card:before,.product-stage:after{content:'';position:absolute;inset:0;pointer-events:none;z-index:2;background:radial-gradient(ellipse at var(--light-x) var(--light-y),#ffffff12,transparent 65%);border:1px solid #ffffff24;opacity:0;transition:opacity .25s}
+.depth-card:hover:before,.depth-card:focus-visible:before{opacity:1}
+.product-stage{overflow:hidden;border:5px solid #eee8dd;border-radius:3px;background:#ede8dd;box-shadow:0 3px 0 #b8b09f,0 7px 0 -3px #d2caba,0 23px 40px -20px #152b2373}
+.product-stage.is-depth{transform:perspective(1300px) rotateX(calc(-2deg + var(--tilt-x))) rotateY(calc(-3deg + var(--tilt-y)))}
+.product-stage.is-depth:after{opacity:1}
+.product-stage>.product-photo,.product-stage>.original-product-image{display:block;aspect-ratio:1;width:100%;height:auto}
+.view-controls{display:flex;justify-content:space-between;align-items:center;gap:15px;margin:24px 0 16px}
+.view-mode,.view-angles>button{background:transparent;color:var(--green);border:1px solid var(--line);min-height:36px;padding:7px 12px;font-size:16px;letter-spacing:.03em}
+.view-mode[aria-pressed=true]{background:var(--green);border-color:var(--green);color:var(--ivory)}
+.view-mode:hover,.view-angles>button:hover{border-color:var(--green)}
+.view-angles{display:flex;gap:6px}
+.view-angles>button:first-child,.view-angles>button:last-child{width:36px;padding:4px;font-size:26px;line-height:1}
+.view-angles>button:disabled{opacity:.35}
+.gallery-thumbs>button{overflow:hidden}
+.gallery-thumbs .detail-thumb{transform:scale(1.7)}
+.product-stage>.weave-detail{transform:scale(1.75);transform-origin:center}
+.category-card>.product-photo{box-shadow:0 2px 0 #c6beaf,0 14px 28px -23px #203d3266;transition:box-shadow .3s,transform .3s}
+@media(hover:hover) and (pointer:fine){
+  .depth-card:hover{box-shadow:0 4px 0 #c6beaf,0 18px 30px -16px #203d3270;transform:perspective(1100px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) translateY(-5px)}
+  .depth-card:focus-visible{transform:perspective(1100px) rotateX(2deg) rotateY(-3deg) translateY(-3px)}
+  .category-card:hover>.product-photo{transform:perspective(1100px) rotateY(-2deg) translateY(-3px);box-shadow:0 3px 0 #c6beaf,0 18px 28px -19px #203d3270}
+}
+@media(max-width:760px){
+  .product-stage{border-width:4px;box-shadow:0 3px 0 #b8b09f,0 14px 25px -16px #152b2373}
+  .product-stage.is-depth{transform:perspective(1200px) rotateX(calc(-1deg + var(--tilt-x))) rotateY(calc(-2deg + var(--tilt-y)))}
+  .view-mode,.view-angles>button{min-height:44px;font-size:17px}
+  .view-angles>button:first-child,.view-angles>button:last-child{width:44px}
+  .view-controls{margin-top:18px;margin-bottom:14px}
+}
+@media(prefers-reduced-motion:reduce){
+  .depth-card,.depth-card:hover,.depth-card:focus-visible,.product-stage,.product-stage.is-depth,.category-card:hover>.product-photo{transform:none!important;transition:none!important}
+  .depth-card:before,.product-stage:after{display:none}
+}
