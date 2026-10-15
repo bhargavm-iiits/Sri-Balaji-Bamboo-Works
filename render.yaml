@@ -1,0 +1,37 @@
+services:
+  - type: web
+    name: sri-balaji-bamboo-works
+    runtime: docker
+    repo: https://github.com/bhargavm-iiits/Sri-Balaji-Bamboo-Works
+    branch: main
+    region: singapore
+    plan: 0.5c-512mb
+    numInstances: 1
+    autoDeployTrigger: "off"
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    disk:
+      name: encrypted-orders
+      mountPath: /app/storage
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: PORT
+        value: "10000"
+      - key: DATA_DIR
+        value: /app/storage
+      - key: PUBLIC_SITE_URL
+        sync: false
+      - key: OWNER_PASSWORD_HASH
+        sync: false
+      - key: OWNER_TOTP_SECRET
+        sync: false
+      - key: ORDER_ENCRYPTION_KEY
+        sync: false
+      - key: INDEXING_ENABLED
+        value: "false"
+      - key: WHATSAPP_NOTIFICATIONS_ENABLED
+        value: "false"
