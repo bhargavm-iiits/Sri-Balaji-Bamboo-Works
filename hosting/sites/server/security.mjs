@@ -1,3 +1,5 @@
+import {scrypt} from 'node:crypto';
+import {Buffer} from 'node:buffer';
 const bytes=new TextEncoder();
 export const hex=value=>[...new Uint8Array(value)].map(b=>b.toString(16).padStart(2,'0')).join('');
 export const random=n=>hex(crypto.getRandomValues(new Uint8Array(n)));
@@ -5,6 +7,11 @@ export const hash=async value=>hex(await crypto.subtle.digest('SHA-256',bytes.en
 const decode=value=>Uint8Array.from(atob(value),c=>c.charCodeAt(0));
 const encode=value=>btoa(String.fromCharCode(...new Uint8Array(value)));
 export function equal(a,b){if(typeof a!=='string'||typeof b!=='string'||a.length!==b.length)return false;let diff=0;for(let i=0;i<a.length;i++)diff|=a.charCodeAt(i)^b.charCodeAt(i);return diff===0;}
+const passwordPattern=/^scrypt\$32768\$8\$3\$([a-f0-9]{32})\$([a-f0-9]{128})$/;
+export const passwordConfigured=value=>typeof value==='string'&&passwordPattern.test(value);
+const derivePassword=(password,salt)=>new Promise((resolve,reject)=>scrypt(password,Buffer.from(salt,'hex'),64,{N:32768,r:8,p:3,maxmem:64*1024*1024},(error,key)=>error?reject(error):resolve(key.toString('hex'))));
+export async function hashPassword(password){if(typeof password!=='string'||password.length<16||password.length>256)throw new Error('Use a password between 16 and 256 characters.');const salt=random(16);return `scrypt$32768$8$3$${salt}$${await derivePassword(password,salt)}`;}
+export async function verifyPassword(password,encoded){const match=typeof encoded==='string'&&encoded.match(passwordPattern);if(!match||typeof password!=='string'||password.length<1||password.length>256)return false;return equal(await derivePassword(password,match[1]),match[2]);}
 export async function seal(value,keyValue,id){
  const raw=decode(keyValue);if(raw.length!==32)throw new Error('Invalid storage key.');
  const key=await crypto.subtle.importKey('raw',raw,'AES-GCM',false,['encrypt']);const iv=crypto.getRandomValues(new Uint8Array(12));

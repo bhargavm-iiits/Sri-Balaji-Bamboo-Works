@@ -1,3 +1,4 @@
+import {searchMetadata,structuredData,primaryOrigin,buyingGuide} from './search-content.js';
 import {orderPage,mountOrders,placeOrder,setupOrderEvents} from './order-flow.js';
 import {business} from './config.js';
 import {landingHero} from './landing.js';
@@ -86,7 +87,12 @@ function render(){
   const isProduct=pathname.startsWith('/product/');const product=isProduct?findProduct(pathname.split('/')[2]):null;
   const family=pathname.match(/^\/collections\/([a-z-]+)$/)?.[1];if(family&&categoryInfo[family]){routes[pathname]=()=>shop(new URLSearchParams({category:family}));titles[pathname]=categoryInfo[family].name;}
   $('#main').innerHTML=isProduct?productPage(pathname.split('/')[2]):(routes[pathname]||notFound)();renderHeader();renderFooter();
-  document.title=`${product?.name||titles[pathname]||'Page not found'} | Sri Balaji Bamboo Works`;const description=document.querySelector('meta[name=description]');if(description)description.content=product?product.description:family&&categoryInfo[family]?categoryInfo[family].description:'Bamboo shop in Shidlaghatta, Chikkaballapur, Karnataka. Explore baskets, Mara trays, hand fans, bamboo poles and ladders at Sri Balaji Bamboo Works.';for(const [property,value] of Object.entries({'og:title':document.title,'og:description':description?.content||'','og:url':business.website+pathname})){const meta=document.querySelector('meta[property="'+property+'"]');if(meta)meta.content=value;}const robots=document.querySelector('meta[name=robots]');if(robots)robots.content=['/owner','/orders','/cart','/checkout','/payment','/request'].includes(pathname)?'noindex, nofollow':'index, follow';const canonical=document.querySelector('link[rel=canonical]');if(canonical)canonical.href=business.website+pathname;
+  const meta=searchMetadata(pathname),indexable=meta.indexable&&document.documentElement.dataset.indexing!=='false';
+  document.title=meta.indexable?meta.title:`${product?.name||titles[pathname]||'Page not found'} | Sri Balaji Bamboo Works`;
+  for(const [selector,value] of Object.entries({'meta[name="description"]':meta.description,'meta[property="og:title"]':document.title,'meta[property="og:description"]':meta.description,'meta[property="og:url"]':primaryOrigin+pathname,'meta[property="og:image"]':primaryOrigin+'/assets/'+meta.image,'meta[property="og:type"]':product?'product':'website','meta[name="robots"]':indexable?'index, follow':'noindex, nofollow'})){const node=document.querySelector(selector);if(node)node.content=value;}
+  const canonical=document.querySelector('link[rel="canonical"]');if(canonical)canonical.href=primaryOrigin+pathname;
+  const schema=document.querySelector('#page-structured-data');if(schema)schema.textContent=JSON.stringify(structuredData(pathname));
+  if(pathname==='/'||pathname==='/care')$('#main').insertAdjacentHTML('beforeend',buyingGuide());
   if(pathname==='/shop'||(family&&categoryInfo[family]))updateShop();
   syncPhotoDepthPreference();setupMotion();mountOrders(pathname,params);
   window.scrollTo({top:0,behavior:'instant'});const heading=$('#main h1');if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});}
